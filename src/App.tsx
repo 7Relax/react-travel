@@ -1,50 +1,18 @@
 import styles from "./App.module.css"
-import { Header, Footer, SideMenu, Carousel, ProductCollection,
-  BusinessPartners } from './components'
-import { Row, Col, Typography } from 'antd'
-import { productList1, productList2, productList3 } from './mockups'
-import sideImage1 from './assets/images/sider_2019_12-09.png'
-import sideImage2 from './assets/images/sider_2019_02-04.png'
-import sideImage3 from './assets/images/sider_2019_02-04-2.png'
+import { HomePage } from './pages/home'
+/**
+ * 因为项目是网页项目，所以会利用浏览器的导航功能，利用H5的API来进行路由，
+ * 所以使用 BrowserRouter 这个组件，它相当于是一个与路由相关的上下文对象。
+ * 用 BrowserRouter 来包裹所有的页面，对于页面的路由需要使用 Route 路径组件
+ */
+import { BrowserRouter, Route } from 'react-router-dom'
 
 function App() {
   return (
     <div className={styles.App}>
-      <Header />
-
-      {/* 页面内容 content */}
-      <div className={styles['page-content']}>
-        <Row style={{marginTop: 20}}>
-          <Col span={6}>
-            <SideMenu />
-          </Col>
-          <Col span={18}>
-            <Carousel />
-          </Col>
-        </Row>
-
-        {/* 产品推荐 */}
-        <ProductCollection
-          title={<Typography.Title level={3} type='warning'>爆款推荐</Typography.Title>}
-          sideImage={sideImage1}
-          products={productList1}
-        />
-        <ProductCollection
-          title={<Typography.Title level={3} type='danger'>新品上市</Typography.Title>}
-          sideImage={sideImage2}
-          products={productList2}
-        />
-        <ProductCollection
-          title={<Typography.Title level={3} type='success'>国内游推荐</Typography.Title>}
-          sideImage={sideImage3}
-          products={productList3}
-        />
-
-        {/* 合作企业 */}
-        <BusinessPartners />
-      </div>
-
-      <Footer />
+      <BrowserRouter>
+        <Route path='/' component={HomePage} />
+      </BrowserRouter>
     </div>
   )
 }
