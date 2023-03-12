@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, Typography } from 'antd'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter, RouteComponentProps, Link } from 'react-router-dom'
+import { MyLink } from '../link'
 
 interface PropsType extends RouteComponentProps {
   id: string | number
@@ -14,8 +15,7 @@ const ProductImageComponent: React.FC<PropsType> = ({
   id, size, imageSrc, price, title, history, location, match
 }) => {
   return (
-    // 通过 history.push 把下一个页面推进导航中
-    <div onClick={() => history.push(`/detail/${id}`)}>
+    <MyLink to={`/detail/${id}`}>
       {size === 'large' ? (
         <Image src={imageSrc} height={285} width={490} />
       ) : (
@@ -25,7 +25,7 @@ const ProductImageComponent: React.FC<PropsType> = ({
         <Typography.Text type='secondary'>{title.slice(0, 12)}</Typography.Text>
         <Typography.Text type='danger' strong>￥{price}起</Typography.Text>
       </div>
-    </div>
+    </MyLink>
   )
 }
 
