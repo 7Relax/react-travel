@@ -20,8 +20,9 @@ function App() {
             所以这两个页面会叠在一起显示了。
           */}
           <Route exact path='/' component={HomePage} />
-          {/* 当在Route中使用component传递组件的时候，React Router会向下传递3个props数据，
-            分别是：history, location, match
+          {/* React Router在Route组件中，通过component把路由数据传递给页面的：
+            分别是：history, location, match 这3个props，
+            那么跨组件（子组件）的路由信息又是如何传递的呢？可以利用 HOC、hooks
           */}
           <Route path='/signin' component={SigninPage} />
           <Route path='/register' component={RegisterPage} />

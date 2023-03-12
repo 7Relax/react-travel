@@ -1,7 +1,8 @@
 import React from 'react'
 import { Image, Typography } from 'antd'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-interface PropsType {
+interface PropsType extends RouteComponentProps {
   id: string | number
   size: 'large' | 'small'
   imageSrc: string
@@ -9,11 +10,12 @@ interface PropsType {
   title: string
 }
 
-export const ProductImage: React.FC<PropsType> = ({
-  id, size, imageSrc, price, title
+const ProductImageComponent: React.FC<PropsType> = ({
+  id, size, imageSrc, price, title, history, location, match
 }) => {
   return (
-    <>
+    // 通过 history.push 把下一个页面推进导航中
+    <div onClick={() => history.push(`/detail/${id}`)}>
       {size === 'large' ? (
         <Image src={imageSrc} height={285} width={490} />
       ) : (
@@ -23,6 +25,9 @@ export const ProductImage: React.FC<PropsType> = ({
         <Typography.Text type='secondary'>{title.slice(0, 12)}</Typography.Text>
         <Typography.Text type='danger' strong>￥{price}起</Typography.Text>
       </div>
-    </>
+    </div>
   )
 }
+
+// 文件的输出对象：是使用HOC高阶函数 withRouter 处理过的组件
+export const ProductImage = withRouter(ProductImageComponent)
