@@ -13,20 +13,39 @@ class HeaderClass extends React.Component<RouteComponentProps, State> {
   constructor(props) {
     super(props)
     const storeState = store.getState()
+    // 初始化组件state
     this.state = {
       language: storeState.language,
       languageList: storeState.languageList
     }
+    // 订阅store中的数据
+    store.subscribe(() => {
+      // 在回调函数中取得新数据
+      const newState = store.getState()
+      // 更新组件中的state
+      this.setState({
+        language: newState.language,
+        languageList: newState.languageList,
+      })
+    })
   }
   menuClickHandler = (e) => {
-    console.log(e)
     // 这样仅会修改组件中的state数据，而不是全局Redux中的数据
     // this.setState({language: e.key})
-    const action = {
-      type: 'change_language',
-      payload: e.key
+    if (e.key === 'new') {
+      // 处理新语言添加 action
+      const action = {
+        type: 'add_language',
+        payload: { name: '新语言', code: 'new_lang' }
+      }
+      store.dispatch(action)
+    } else {
+      const action = {
+        type: 'change_language',
+        payload: e.key
+      }
+      store.dispatch(action)
     }
-    store.dispatch(action)
   }
   render() {
     // 因为使用了HOC withRouter，所以可以从this.props中取得history
@@ -44,6 +63,7 @@ class HeaderClass extends React.Component<RouteComponentProps, State> {
                   {this.state.languageList.map((language) => (
                     <Menu.Item key={language.code}>{language.name}</Menu.Item>
                   ))}
+                  <Menu.Item key='new'>添加新语言</Menu.Item>
                 </Menu>
               }
               icon={<GlobalOutlined />}
