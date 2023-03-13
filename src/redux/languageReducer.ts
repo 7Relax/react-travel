@@ -1,5 +1,5 @@
 
-interface LanguageState {
+export interface LanguageState {
   language: 'zh' | 'en'
   languageList: { name: string, code: string }[]
 }
