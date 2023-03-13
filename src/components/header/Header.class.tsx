@@ -18,6 +18,16 @@ class HeaderClass extends React.Component<RouteComponentProps, State> {
       languageList: storeState.languageList
     }
   }
+  menuClickHandler = (e) => {
+    console.log(e)
+    // 这样仅会修改组件中的state数据，而不是全局Redux中的数据
+    // this.setState({language: e.key})
+    const action = {
+      type: 'change_language',
+      payload: e.key
+    }
+    store.dispatch(action)
+  }
   render() {
     // 因为使用了HOC withRouter，所以可以从this.props中取得history
     const history = this.props.history
@@ -30,7 +40,7 @@ class HeaderClass extends React.Component<RouteComponentProps, State> {
             <Dropdown.Button
               style={{ marginLeft: 15 }}
               overlay={
-                <Menu>
+                <Menu onClick={this.menuClickHandler}>
                   {this.state.languageList.map((language) => (
                     <Menu.Item key={language.code}>{language.name}</Menu.Item>
                   ))}
