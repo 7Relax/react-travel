@@ -4,46 +4,53 @@ import styles from './Header.module.css'
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
 import { GlobalOutlined } from '@ant-design/icons'
 import { withRouter, RouteComponentProps  } from 'react-router-dom'
-import store from '../../redux/store'
-import { LanguageState } from '../../redux/language/languageReducer'
+import { RootState } from '../../redux/store'
 import {
   changeLanguageActionCreator, addLanguageActionCreator
 } from '../../redux/language/languageActions'
 import { withTranslation, WithTranslation } from 'react-i18next'
+// connect 就是一个HOC高阶函数
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 
-interface State extends LanguageState {}
-
-class HeaderClass extends React.Component<RouteComponentProps & WithTranslation, State> {
-  constructor(props) {
-    super(props)
-    const storeState = store.getState()
-    // 初始化组件state
-    this.state = {
-      language: storeState.language,
-      languageList: storeState.languageList
-    }
-    // 订阅store中的数据
-    store.subscribe(() => {
-      // 在回调函数中取得新数据
-      const newState = store.getState()
-      // 更新组件中的state
-      this.setState({
-        language: newState.language,
-        languageList: newState.languageList,
-      })
-    })
+const mapStateToProps = (state: RootState) => {
+  return {
+    language: state.language,
+    languageList: state.languageList
   }
-  menuClickHandler = (e) => {
-    // 这样仅会修改组件中的state数据，而不是全局Redux中的数据
-    // this.setState({language: e.key})
+}
 
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    changeLanguage: (code: 'zh' | 'en') => {
+      const action = changeLanguageActionCreator(code)
+      dispatch(action)
+    },
+    addLanguage: (name: string, code: string) => {
+      const action = addLanguageActionCreator(name, code)
+      dispatch(action)
+    }
+  }
+}
+
+type PropsType =
+  RouteComponentProps                     // react-router 路由props类型
+  & WithTranslation                       // i18n props类型
+  & ReturnType<typeof mapStateToProps>    // redux store 映射类型 - ReturnType表示: 反向注入
+  & ReturnType<typeof mapDispatchToProps> // redux dispatch 映射类型
+
+// class HeaderClass extends React.Component<RouteComponentProps & WithTranslation, State> {
+class HeaderClass extends React.Component<PropsType> {
+
+  menuClickHandler = (e) => {
     if (e.key === 'new') {
       // 处理新语言添加 action
-      const action = addLanguageActionCreator('新语言', 'new_lang')
-      store.dispatch(action)
+      // const action = addLanguageActionCreator('新语言', 'new_lang')
+      this.props.addLanguage('新语言', 'new_lang')
     } else {
-      const action = changeLanguageActionCreator(e.key)
-      store.dispatch(action)
+      // const action = changeLanguageActionCreator(e.key)
+      // store.dispatch(action)
+      this.props.changeLanguage(e.key)
     }
   }
   render() {
@@ -60,7 +67,7 @@ class HeaderClass extends React.Component<RouteComponentProps & WithTranslation,
               style={{ marginLeft: 15 }}
               overlay={
                 <Menu onClick={this.menuClickHandler}>
-                  {this.state.languageList.map((language) => (
+                  {this.props.languageList.map((language) => (
                     <Menu.Item key={language.code}>{language.name}</Menu.Item>
                   ))}
                   <Menu.Item key='new'>{t('header.add_new_language')}</Menu.Item>
@@ -68,7 +75,7 @@ class HeaderClass extends React.Component<RouteComponentProps & WithTranslation,
               }
               icon={<GlobalOutlined />}
             >
-              { this.state.language === 'zh'? '中文' : '英文' }
+              { this.props.language === 'zh'? '中文' : '英文' }
             </Dropdown.Button>
 
             <Button.Group className={styles['button-group']}>
@@ -119,4 +126,7 @@ class HeaderClass extends React.Component<RouteComponentProps & WithTranslation,
 }
 
 const h = withRouter(HeaderClass)
-export const Header = withTranslation()(h)
+// 当前语言language和语言列表languageList都通过connect函数注入给HeaderClass的props中了
+// 那么就没有在构造函数中初始化那两个state了
+const c = connect(mapStateToProps, mapDispatchToProps)
+export const Header = c(withTranslation()(h))
