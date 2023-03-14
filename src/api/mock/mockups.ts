@@ -2,7 +2,7 @@
  * 首页推荐产品数据
  * */
 // 爆款推荐
-export const productList1 = [
+const productList1 = [
   {
     id: 1,
     title: "埃及阿斯旺+卢克索+红海Red Sea+开罗+亚历山大12日跟团游(5钻)·【官方旗舰明星纯玩团】25人封顶|含签证小费全程餐|3晚尼罗河游轮+3晚红海全包度假村+1晚底比斯古都|升级内陆飞机|优质中文导游队伍|七大神庙+赠项目",
@@ -96,7 +96,7 @@ export const productList1 = [
 ]
 
 // 新品上市
-export const productList2 = [
+const productList2 = [
   {
     id: 10,
     title:
@@ -191,7 +191,7 @@ export const productList2 = [
 ]
 
 // 国内游推荐
-export const productList3 = [
+const productList3 = [
   {
     id: 19,
     title:
@@ -282,5 +282,26 @@ export const productList3 = [
         url: "https://s3.ax1x.com/2020/12/15/rMQOIJ.jpg",
       },
     ],
+  },
+]
+
+export const productList = [
+  {
+    id: 1,
+    title: '爆款推荐',
+    description: '热门旅游线路',
+    touristRoutes: productList1
+  },
+  {
+    id: 2,
+    title: '新品上市',
+    description: '这是新品上市',
+    touristRoutes: productList2
+  },
+  {
+    id: 3,
+    title: '国内游推荐',
+    description: '这是国内游推荐',
+    touristRoutes: productList3
   },
 ]
