@@ -4,31 +4,73 @@ import styles from './Header.module.css'
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
 import { GlobalOutlined } from '@ant-design/icons'
 import { useHistory  } from 'react-router-dom'
+// 解耦: 使用特殊处理过后的 useSelector 获取state数据
+import { useSelector } from '../../redux/hooks'
+// 组件分发action事件 使用useDispatch这个钩子
+import { useDispatch } from 'react-redux'
+// import { Dispatch } from 'redux'
+import {
+  changeLanguageActionCreator,
+  addLanguageActionCreator,
+  // LanguageActionTypes
+} from '../../redux/language/languageActions'
+import { useTranslation } from 'react-i18next'
 
 export const Header: React.FC = () => {
   const history = useHistory()
+  /**
+   * useSelector: 连接store并获取state数据
+   * 使用useSelector的意义：为了解决store和组件的耦合问题，如果每次在使用
+   * useSelector的时候都要指定state的类型，这就意味着组件和store绑定起来了
+   * 而组件与store的深度绑定会导致组件无法被复用，所以需要将state的类型从
+   * 组件中剥离，则需要使用一个接口 (TypedUseSelectorHook) 来实现
+   */
+  const language = useSelector(state => state.language)
+  const languageList = useSelector(state => state.languageList)
+  /**
+   * 这里不做dispatch类型处理，直接使用any类型，因为这样的强类型定义在这里并没有
+   * 起到太大的作用，反而会让代码看上去会更加臃肿，破坏js代码的灵活性
+  */
+ // const dispatch = useDispatch<Dispatch<LanguageActionTypes>>()
+  const dispatch = useDispatch()
+
+  const menuClickHandler = (e) => {
+    console.log(e)
+    if (e.key === 'new') {
+      const action = addLanguageActionCreator('新语言', 'new_lang')
+      dispatch(action)
+    } else {
+      const action = changeLanguageActionCreator(e.key)
+      dispatch(action)
+    }
+  }
+
+  const { t } = useTranslation()
+
   return (
     <div className={styles['app-header']}>
       {/* top-header */}
       <div className={styles['top-header']}>
         <div className={styles.inner}>
-          <Typography.Text>让旅游更幸福</Typography.Text>
+          <Typography.Text>{t('header.slogan')}</Typography.Text>
           <Dropdown.Button
             style={{ marginLeft: 15 }}
             overlay={
-              <Menu>
-                <Menu.Item>中文</Menu.Item>
-                <Menu.Item>English</Menu.Item>
+              <Menu onClick={menuClickHandler}>
+                {languageList.map(l => (
+                  <Menu.Item key={l.code}>{l.name}</Menu.Item>
+                ))}
+                <Menu.Item key='new'>{t('header.add_new_language')}</Menu.Item>
               </Menu>
             }
             icon={<GlobalOutlined />}
           >
-            语言
+            {language === 'zh' ? '中文' : '英文'}
           </Dropdown.Button>
 
           <Button.Group className={styles['button-group']}>
-            <Button onClick={() => history.push('/register')}>注册</Button>
-            <Button onClick={() => history.push('/signin')}>登录</Button>
+            <Button onClick={() => history.push('/register')}>{t('header.register')}</Button>
+            <Button onClick={() => history.push('/signin')}>{t('header.signin')}</Button>
           </Button.Group>
         </div>
       </div>
@@ -39,7 +81,7 @@ export const Header: React.FC = () => {
           <img src={logo} alt="" className={styles['App-logo']}/>
 
           <Typography.Title level={3} className={styles.title}>
-            React 旅游网
+            {t('header.title')}
           </Typography.Title>
         </span>
 
@@ -51,23 +93,23 @@ export const Header: React.FC = () => {
       </Layout.Header>
 
       <Menu mode={'horizontal'} className={styles['main-menu']}>
-        <Menu.Item key={1}>旅游首页</Menu.Item>
-        <Menu.Item key={2}>周末游</Menu.Item>
-        <Menu.Item key={3}>跟团游</Menu.Item>
-        <Menu.Item key={4}>自由行</Menu.Item>
-        <Menu.Item key={5}>私家团</Menu.Item>
-        <Menu.Item key={6}>邮轮</Menu.Item>
-        <Menu.Item key={7}>酒店+景点</Menu.Item>
-        <Menu.Item key={8}>当地玩乐</Menu.Item>
-        <Menu.Item key={9}>主题游</Menu.Item>
-        <Menu.Item key={10}>定制游</Menu.Item>
-        <Menu.Item key={11}>游学</Menu.Item>
-        <Menu.Item key={12}>签证</Menu.Item>
-        <Menu.Item key={13}>企业游</Menu.Item>
-        <Menu.Item key={14}>高端游</Menu.Item>
-        <Menu.Item key={15}>爱玩户外</Menu.Item>
-        <Menu.Item key={16}>保险</Menu.Item>
-      </Menu>
+          <Menu.Item key={1}>{t('header.home_page')}</Menu.Item>
+          <Menu.Item key={2}>{t('header.weekend')}</Menu.Item>
+          <Menu.Item key={3}>{t('header.group')}</Menu.Item>
+          <Menu.Item key={4}>{t('header.backpack')}</Menu.Item>
+          <Menu.Item key={5}>{t('header.private')}</Menu.Item>
+          <Menu.Item key={6}>{t('header.cruise')}</Menu.Item>
+          <Menu.Item key={7}>{t('header.hotel')}</Menu.Item>
+          <Menu.Item key={8}>{t('header.local')}</Menu.Item>
+          <Menu.Item key={9}>{t('header.theme')}</Menu.Item>
+          <Menu.Item key={10}>{t('header.custom')}</Menu.Item>
+          <Menu.Item key={11}>{t('header.study')}</Menu.Item>
+          <Menu.Item key={12}>{t('header.visa')}</Menu.Item>
+          <Menu.Item key={13}>{t('header.enterprise')}</Menu.Item>
+          <Menu.Item key={14}>{t('header.high_end')}</Menu.Item>
+          <Menu.Item key={15}>{t('header.outdoor')}</Menu.Item>
+          <Menu.Item key={16}>{t('header.insurance')}</Menu.Item>
+        </Menu>
     </div>
   )
 }

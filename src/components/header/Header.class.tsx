@@ -56,6 +56,7 @@ class HeaderClass extends React.Component<PropsType> {
   render() {
     // 因为使用了HOC withRouter，所以可以从this.props中取得history
     const history = this.props.history
+    // t: i18n
     const { t } = this.props
     return (
       <div className={styles['app-header']}>
@@ -91,7 +92,7 @@ class HeaderClass extends React.Component<PropsType> {
             <img src={logo} alt="" className={styles['App-logo']}/>
 
             <Typography.Title level={3} className={styles.title}>
-              React 旅游网
+              {t('header.title')}
             </Typography.Title>
           </span>
 

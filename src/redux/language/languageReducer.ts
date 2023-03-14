@@ -6,8 +6,8 @@ import {
 } from './languageActions'
 
 export interface LanguageState {
-  language: 'zh' | 'en'
-  languageList: { name: string, code: string }[]
+  language: 'zh' | 'en'                          // 当前语言
+  languageList: { name: string, code: string }[] // 语言列表
 }
 
 const defaultState: LanguageState = {
