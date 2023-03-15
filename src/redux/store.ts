@@ -1,6 +1,7 @@
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import languageReducer from './language/languageReducer'
 import productsReducer from './products/productsReducer'
+import thunk from 'redux-thunk'
 
 // rootReducer: 所有reducer的集合体
 const rootReducer = combineReducers({
@@ -8,7 +9,7 @@ const rootReducer = combineReducers({
   product: productsReducer,
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 // state 的类型定义
 export type RootState = ReturnType<typeof store.getState>

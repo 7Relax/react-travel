@@ -10,14 +10,9 @@ import sideImage3 from '../../assets/images/sider_2019_02-04-2.png'
 import styles from './HomePage.module.css'
 // 使用HOC的方式-在类组件中实现i18n
 import { withTranslation, WithTranslation } from 'react-i18next'
-import { getProductList } from '../../api/product'
 import { connect } from 'react-redux'
 import { RootState } from '../../redux/store'
-import {
-  fetchProductsStartActionCreator,
-  fetchProductsSuccessActionCreator,
-  fetchProductsFailActionCreator,
-} from '../../redux/products/productsReducerActions'
+import { getMeDataActionCreator } from '../../redux/products/productsReducerActions'
 
 const mapStateToProps = (state: RootState) => {
   // 映射数据
@@ -32,14 +27,9 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch) => {
   // 映射函数
   return {
-    fetchStart: () => {
-      dispatch(fetchProductsStartActionCreator())
-    },
-    fetchSuccess: (data) => {
-      dispatch(fetchProductsSuccessActionCreator(data))
-    },
-    fetchFail: (error) => {
-      dispatch(fetchProductsFailActionCreator(error))
+    giveMeData: () => {
+      // getMeDataActionCreator() 返回的action是一个函数，并作为 dispatch 的参数
+      dispatch(getMeDataActionCreator())
     }
   }
 }
@@ -50,13 +40,9 @@ type PropsType = WithTranslation &
 
 class HomePageComponent extends React.Component<PropsType> {
 
-  async componentDidMount() {
-    try {
-      const data = await getProductList()
-      this.props.fetchSuccess(data)
-    } catch (error) {
-      this.props.fetchFail(error.message)
-    }
+  componentDidMount() {
+    // 获取数据
+    this.props.giveMeData()
   }
 
   render() {

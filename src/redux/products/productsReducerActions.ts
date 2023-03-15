@@ -1,3 +1,7 @@
+import { ThunkAction } from 'redux-thunk'
+import { RootState } from '../store'
+import { getProductList } from '../../api/product'
+
 // 正在获取(调用)推荐产品api
 export const FETCH_PRODUCTS_START = 'FETCH_PRODUCTS_START'
 // 推荐产品api调用成功
@@ -45,5 +49,32 @@ export const fetchProductsFailActionCreator = (error): FetchProductsFailAction =
   return {
     type: FETCH_PRODUCTS_FAIL,
     payload: error
+  }
+}
+
+// thunk 作用：让dispatch多支持一种函数的类型
+// thunk 可以返回一个函数，而不一定是js对象
+// 在一个 thunk action 中可以完成一些列连接的action的操作
+// 并且可以处理异步逻辑
+// 业务逻辑可以从 ui 层面挪到这里，代码分层会更清晰
+/**
+ * ThunkAction 泛型有4个参数：
+ * R: return 最终的输出类型
+ * S: Store 的 state 的类型
+ * E: extra 定义额外的参数
+ * A: Action
+ */
+export const getMeDataActionCreator = (): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  ProductsAction
+> => async (dispatch, getState) => {
+  dispatch(fetchProductsStartActionCreator())
+  try {
+    const data = await getProductList()
+    dispatch(fetchProductsSuccessActionCreator(data))
+  } catch (error) {
+    dispatch(fetchProductsFailActionCreator(error.message))
   }
 }
