@@ -11,42 +11,56 @@ import styles from './HomePage.module.css'
 // 使用HOC的方式-在类组件中实现i18n
 import { withTranslation, WithTranslation } from 'react-i18next'
 import { getProductList } from '../../api/product'
+import { connect } from 'react-redux'
+import { RootState } from '../../redux/store'
+import {
+  fetchProductsStartActionCreator,
+  fetchProductsSuccessActionCreator,
+  fetchProductsFailActionCreator,
+} from '../../redux/products/productsReducerActions'
 
-interface State {
-  loading: boolean
-  error: string | null
-  productList: any[]
+const mapStateToProps = (state: RootState) => {
+  // 映射数据
+  return {
+    loading: state.product.loading,
+    error: state.product.error,
+    productList: state.product.productList
+  }
 }
 
-class HomePageComponent extends React.Component<WithTranslation, State> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: true,
-      error: null,
-      productList: []
+// 连接dispatch 分发action
+const mapDispatchToProps = (dispatch) => {
+  // 映射函数
+  return {
+    fetchStart: () => {
+      dispatch(fetchProductsStartActionCreator())
+    },
+    fetchSuccess: (data) => {
+      dispatch(fetchProductsSuccessActionCreator(data))
+    },
+    fetchFail: (error) => {
+      dispatch(fetchProductsFailActionCreator(error))
     }
   }
+}
+
+type PropsType = WithTranslation &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>
+
+class HomePageComponent extends React.Component<PropsType> {
 
   async componentDidMount() {
     try {
       const data = await getProductList()
-      this.setState({
-        loading: false,
-        error: null,
-        productList: data
-      })
+      this.props.fetchSuccess(data)
     } catch (error) {
-      this.setState({
-        error: error.message,
-        loading: false
-      })
+      this.props.fetchFail(error.message)
     }
   }
 
   render() {
-    const { t } = this.props
-    const { productList, loading, error } = this.state
+    const { t, productList, loading, error } = this.props
 
     // loading ...
     if (loading) {
@@ -119,4 +133,9 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
 
 // 第一个() 返回的是语言所使用的命名空间，第二个() 才是用于组件的
 // 相当于是高阶组件的高阶组件
-export const HomePage = withTranslation()(HomePageComponent)
+const w = withTranslation()
+
+// 连接组件的props 与 redux store
+// 第一个() 里表示：store 的映射数据，第二个() 里放入组件
+const c = connect(mapStateToProps, mapDispatchToProps)
+export const HomePage = c(w(HomePageComponent))

@@ -25,8 +25,8 @@ export const Header: React.FC = () => {
    * 而组件与store的深度绑定会导致组件无法被复用，所以需要将state的类型从
    * 组件中剥离，则需要使用一个接口 (TypedUseSelectorHook) 来实现
    */
-  const language = useSelector(state => state.language)
-  const languageList = useSelector(state => state.languageList)
+  const language = useSelector(state => state.lang.language)
+  const languageList = useSelector(state => state.lang.languageList)
   /**
    * 这里不做dispatch类型处理，直接使用any类型，因为这样的强类型定义在这里并没有
    * 起到太大的作用，反而会让代码看上去会更加臃肿，破坏js代码的灵活性
@@ -35,7 +35,6 @@ export const Header: React.FC = () => {
   const dispatch = useDispatch()
 
   const menuClickHandler = (e) => {
-    console.log(e)
     if (e.key === 'new') {
       const action = addLanguageActionCreator('新语言', 'new_lang')
       dispatch(action)

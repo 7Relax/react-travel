@@ -1,6 +1,3 @@
-/**
- * 首页推荐产品数据
- * */
 // 爆款推荐
 const productList1 = [
   {
@@ -285,6 +282,9 @@ const productList3 = [
   },
 ]
 
+/**
+ * 首页推荐产品数据
+ */
 export const productList = [
   {
     id: 1,
