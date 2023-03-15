@@ -305,3 +305,46 @@ export const productList = [
     touristRoutes: productList3
   },
 ]
+
+/**
+ * 旅游线路详情
+ */
+export const touristRoutesData = {
+  id: 1,
+  title: '埃及阿斯旺+卢克索+红海Red Sea+开罗+亚历山大12日跟团游(5站)',
+  description: '【官方旗舰明星纯玩团】25人封顶',
+  price: 1199.999,
+  originalPrice: 11999.99,
+  discountPresent: 0.1,
+  rating: 3.5,
+  travelDays: 'EightPlus',
+  tripType: 'HotelAndAttractions',
+  departureCity: 'Beijing',
+  createTime: '',
+  updateTime: '',
+  departureTime: null,
+  features: `<div>这里是产品特色</div>`,
+  fees: `<div>这里是费用</div>`,
+  notes: `<div>这里是预订须知</div>`,
+  links: [],
+  touristRoutePictures: [
+    {
+      url: "https://cdn.pixabay.com/photo/2012/08/06/00/53/bridge-53769__340.jpg"
+    },
+    {
+      url: "https://cdn.pixabay.com/photo/2014/10/07/13/48/mountain-477832__340.jpg"
+    },
+    {
+      url: "https://cdn.pixabay.com/photo/2015/12/27/21/11/beach-1110498__340.jpg"
+    },
+    {
+      url: "https://cdn.pixabay.com/photo/2018/08/12/15/29/hintersee-3601004__340.jpg"
+    },
+    {
+      url: "https://cdn.pixabay.com/photo/2017/05/09/03/46/alberta-2297204__340.jpg"
+    },
+    {
+      url: "https://cdn.pixabay.com/photo/2014/07/30/02/00/iceberg-404966__340.jpg"
+    },
+  ]
+}

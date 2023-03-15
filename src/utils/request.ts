@@ -1,10 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios, { AxiosRequestConfig } from 'axios'
+// import axios, { AxiosRequestConfig } from 'axios'
+import { AxiosRequestConfig } from 'axios'
 
 // 创建请求实例
-const request = axios.create({
-  baseURL: 'http://123.56.149.216:8080/api'
-})
+// const request = axios.create({
+//   baseURL: 'http://123.56.149.216:8080/api'
+// })
 
 // export default request
 

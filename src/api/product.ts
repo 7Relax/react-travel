@@ -3,7 +3,7 @@
  */
 
 import request from '../utils/request'
-import { productList } from './mock/mockups'
+import { productList, touristRoutesData } from './mock/mockups'
 
 // 获取产品列表
 export const getProductList = () => {
@@ -11,4 +11,15 @@ export const getProductList = () => {
     method: 'GET',
     url: '/productCollections'
   }, productList, 500)
+}
+
+// 获取旅游路线
+export const getTouristRoutes = (id: string | number) => {
+  return request({
+    method: 'GET',
+    url: '/touristRoutes',
+    params: {
+      id
+    }
+  }, touristRoutesData, 400)
 }
