@@ -351,3 +351,27 @@ export const touristRoutesData = {
     },
   ]
 }
+
+/**
+ * 用户评价数据
+ */
+export const commentData = [
+  {
+    author: 'Han Solo',
+    avatar: 'https://cdn.pixabay.com/photo/2016/11/18/14/08/jetty-1834801__340.jpg',
+    content: `我们提供一系列设计原则、实用图案和高质量的设计资源（Sketch和Axure），帮助人们漂亮高效地创建产品原型。`,
+    createDate: '2022-03-08'
+  },
+  {
+    author: 'Han Solo',
+    avatar: 'https://cdn.pixabay.com/photo/2016/11/18/14/08/jetty-1834801__340.jpg',
+    content: `我们提供一系列设计原则、实用图案和高质量的设计资源（Sketch和Axure），帮助人们漂亮高效地创建产品原型。`,
+    createDate: '2022-03-09'
+  },
+  {
+    author: 'Han Solo',
+    avatar: 'https://cdn.pixabay.com/photo/2016/11/18/14/08/jetty-1834801__340.jpg',
+    content: `我们提供一系列设计原则、实用图案和高质量的设计资源（Sketch和Axure），帮助人们漂亮高效地创建产品原型。`,
+    createDate: '2022-03-10'
+  },
+]
