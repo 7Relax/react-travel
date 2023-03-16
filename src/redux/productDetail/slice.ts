@@ -2,7 +2,8 @@
  * slice 的概念：就相当于 reducer store 中分割出来的子模块
  */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { getTouristRoutes } from '../../api/product'
 
 interface ProductDetailState {
   loading: boolean
@@ -16,9 +17,37 @@ const initialState: ProductDetailState = {
   data: null
 }
 
+export const getProductDetail = createAsyncThunk(
+  'productDetail/getProductDetail', // 命名空间
+  async (touristRouteId: string, thunkAPI) => {
+    const data = await getTouristRoutes(touristRouteId)
+    /**
+     * 那么 getProductDetail 函数就会自动生成
+     * pending fulfilled rejected 这3个action了
+     */
+    return data
+  },
+)
+
 export const productDetailSlice = createSlice({
   name: 'productDetail',
   initialState,
+  extraReducers: {
+    // 重命名 reducer
+    // 所有的映射都是通过 RTK 自动完成的
+    [getProductDetail.pending.type]: (state) => {
+      state.loading = true
+    },
+    [getProductDetail.fulfilled.type]: (state, action) => {
+      state.loading = false
+      state.data = action.payload
+      state.error = null
+    },
+    [getProductDetail.rejected.type]: (state, action: PayloadAction<string | null>) => {
+      state.loading = false
+      state.error = action.payload
+    },
+  },
   /**
    * 1. 这里的 reducer 实际上是将 action 和 reducer 捆绑在一起了，
    * 所以无需再单独定义 action

@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, useParams } from 'react-router-dom'
-import { getTouristRoutes } from '../../api/product'
 import { commentData } from '../../api/mock/mockups'
 import { Spin, Row, Col, DatePicker, Divider, Typography, Anchor, Menu } from 'antd'
 import styles from './DetailPage.module.css'
 import { Header, Footer, ProductIntro, ProductComments } from '../../components'
-import { productDetailSlice } from '../../redux/productDetail/slice'
+import { productDetailSlice, getProductDetail } from '../../redux/productDetail/slice'
 import { useSelector } from '../../redux/hooks' // 自定义hook
 import { useDispatch  } from 'react-redux';
 
@@ -34,23 +33,7 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = () => {
 
   // 使用副作用钩子
   useEffect(() => {
-    // 使用异步方式来进行api的调用
-    const fetchData = async () => {
-      try {
-        // setLoading(true)
-        // productDetailSlice.actions.fetchStart() 拿到自动生成了 action creator
-        dispatch(productDetailSlice.actions.fetchStart())
-        const data = await getTouristRoutes(touristRouteId)
-        // setLoading(false)
-        // setProduct(data)
-        dispatch(productDetailSlice.actions.fetchSuccess(data))
-      } catch (error) {
-        // setLoading(false)
-        // setError(error.message)
-        dispatch(productDetailSlice.actions.fetchFail(error.message))
-      }
-    }
-    fetchData()
+    dispatch(getProductDetail(touristRouteId))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // 页面的初始化数据只会调用一次，所以这里用空数组
 

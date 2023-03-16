@@ -23,7 +23,15 @@ const rootReducer = combineReducers({
   productDetail: productDetailSlice.reducer
 })
 
-const store = createStore(rootReducer, applyMiddleware(thunk, actionLog))
+// const store = createStore(rootReducer, applyMiddleware(thunk, actionLog))
+// 从普通的 Store 切换为一个 RTK 的 Store
+const store = configureStore({
+  reducer: rootReducer,
+  // getDefaultMiddleware(): 获取所有的默认中间件
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), actionLog],
+  // 启用：Redux DevTools 谷歌浏览器插件
+  devTools: true,
+})
 
 // state 的类型定义
 export type RootState = ReturnType<typeof store.getState>
