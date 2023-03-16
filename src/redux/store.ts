@@ -14,13 +14,16 @@ import { actionLog } from "./middlewares/actionLog"
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 // 引入产品详情slice
 import { productDetailSlice } from './productDetail/slice'
+// 引入搜索产品slice
+import { productSearchSlice } from './productSearch/slice'
 
 
 // rootReducer: 所有reducer的集合体
 const rootReducer = combineReducers({
   lang: languageReducer,
   product: productsReducer,
-  productDetail: productDetailSlice.reducer
+  productDetail: productDetailSlice.reducer,
+  productSearch: productSearchSlice.reducer,
 })
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog))

@@ -3,7 +3,11 @@
  */
 
 import request from '../utils/request'
-import { productList, touristRoutesData } from './mock/mockups'
+import {
+  productList,
+  touristRoutesData,
+  searchTouristRoutesDataObj
+} from './mock/mockups'
 
 // 获取产品列表
 export const getProductList = () => {
@@ -22,4 +26,21 @@ export const getTouristRoutes = (id: string | number) => {
       id
     }
   }, touristRoutesData, 150)
+}
+
+export interface SearchParams {
+  keywords: string,
+  currentPage: number | string,
+  pageSize: number | string,
+}
+// 搜索旅游路线
+export const searchTouristRoutes = (params: SearchParams) => {
+  let url = `/touristRoutes?currentPage=${params.currentPage}&pageSize=${params.pageSize}`
+  if (params.keywords) {
+    url += `$keywords=${params.keywords}`
+  }
+  return request({
+    method: 'GET',
+    url,
+  }, searchTouristRoutesDataObj, 120)
 }

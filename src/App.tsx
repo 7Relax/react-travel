@@ -1,5 +1,6 @@
 import styles from "./App.module.css"
-import { HomePage, SigninPage, RegisterPage, DetailPage } from './pages'
+import { HomePage, SigninPage, RegisterPage, DetailPage,
+  SearchPage } from './pages'
 /**
  * 因为项目是网页项目，所以会利用浏览器的导航功能，利用H5的API来进行路由，
  * 所以使用 BrowserRouter 这个组件，它相当于是一个与路由相关的上下文对象。
@@ -27,6 +28,8 @@ function App() {
           <Route path='/signin' component={SigninPage} />
           <Route path='/register' component={RegisterPage} />
           <Route path='/detail/:touristRouteId' component={DetailPage} />
+          {/* keywords:搜索关键词  ?:可选的 */}
+          <Route path='/search/:keywords?' component={SearchPage} />
           <Route render={() => <h1>404 not found</h1>} />
         </Switch>
       </BrowserRouter>

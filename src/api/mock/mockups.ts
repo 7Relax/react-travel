@@ -375,3 +375,57 @@ export const commentData = [
     createDate: '2022-03-10'
   },
 ]
+
+/**
+ * 搜索旅游路线数据
+ */
+const searchTouristRoutesData = [
+  {
+    id: 1,
+    title: '法国+德国+意大利+瑞士12日跟团游(4站)',
+    description: '【匠心定做】庄园酒店 少女峰+卢浮宫+凡尔赛宫+新天鹅堡+塞纳河游船+贡多拉+巴黎蒙帕纳思56层观光廊+吕德斯海姆+科隆+4人1台WIFI',
+    price: 1455.180,
+    originalPrice: 14551.80,
+    discountPresent: 0.1,
+    rating: 5.0,
+    travelDays: 'Five',
+    tripType: 'BackPackTour',
+    departureCity: 'Shenzhen',
+    createTime: '',
+    updateTime: '',
+    departureTime: '',
+    touristRoutePictures: [
+      {
+        url: "https://cdn.pixabay.com/photo/2014/10/07/13/48/mountain-477832__340.jpg",
+      },
+    ]
+  },
+  {
+    id: 2,
+    title: '法国2+德国+意大利+瑞士12日跟团游(4站)',
+    description: '【匠心定做】庄园酒店 少女峰+卢浮宫+凡尔赛宫+新天鹅堡+塞纳河游船+贡多拉+巴黎蒙帕纳思56层观光廊+吕德斯海姆+科隆+4人1台WIFI',
+    price: 1455.180,
+    originalPrice: 14551.80,
+    discountPresent: 0.1,
+    rating: 5.0,
+    travelDays: 'Five',
+    tripType: 'BackPackTour',
+    departureCity: 'Shenzhen',
+    createTime: '',
+    updateTime: '',
+    departureTime: '',
+    touristRoutePictures: [
+      {
+        url: "https://cdn.pixabay.com/photo/2014/08/15/11/29/beach-418742__340.jpg",
+      },
+    ]
+  },
+]
+export const searchTouristRoutesDataObj = {
+  data: searchTouristRoutesData,
+  pagination: {
+    currentPage: 1,
+    pageSize: 10,
+    totalCount: 2,
+  }
+}

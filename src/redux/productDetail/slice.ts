@@ -18,7 +18,7 @@ const initialState: ProductDetailState = {
 }
 
 export const getProductDetail = createAsyncThunk(
-  'productDetail/getProductDetail', // 命名空间
+  'productDetail/getProductDetail', // 命名空间/action
   async (touristRouteId: string, thunkAPI) => {
     const data = await getTouristRoutes(touristRouteId)
     /**
@@ -30,7 +30,7 @@ export const getProductDetail = createAsyncThunk(
 )
 
 export const productDetailSlice = createSlice({
-  name: 'productDetail',
+  name: 'productDetail', // 命名空间
   initialState,
   extraReducers: {
     // 重命名 reducer
