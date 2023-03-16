@@ -10,7 +10,7 @@ export const getProductList = () => {
   return request({
     method: 'GET',
     url: '/productCollections'
-  }, productList, 500)
+  }, productList, 180)
 }
 
 // 获取旅游路线
@@ -21,5 +21,5 @@ export const getTouristRoutes = (id: string | number) => {
     params: {
       id
     }
-  }, touristRoutesData, 400)
+  }, touristRoutesData, 150)
 }
