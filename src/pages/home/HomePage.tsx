@@ -1,13 +1,11 @@
 import React from 'react'
 import {
-  Header, Footer, SideMenu, Carousel,
-  ProductCollection, BusinessPartners
-} from '../../components'
+  SideMenu, Carousel, ProductCollection, BusinessPartners } from '../../components'
+import { MainLayout } from '../../layouts/mainLayout'
 import { Row, Col, Typography, Spin } from 'antd'
 import sideImage1 from '../../assets/images/sider_2019_12-09.png'
 import sideImage2 from '../../assets/images/sider_2019_02-04.png'
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png'
-import styles from './HomePage.module.css'
 // 使用HOC的方式-在类组件中实现i18n
 import { withTranslation, WithTranslation } from 'react-i18next'
 import { connect } from 'react-redux'
@@ -70,49 +68,44 @@ class HomePageComponent extends React.Component<PropsType> {
     }
 
     return (
-      <>
-        <Header />
+      <MainLayout>
 
-        {/* 页面内容 content */}
-        <div className={styles['page-content']}>
-          <Row style={{marginTop: 20}}>
-            <Col span={6}>
-              <SideMenu />
-            </Col>
-            <Col span={18}>
-              <Carousel />
-            </Col>
-          </Row>
+        <Row style={{marginTop: 20}}>
+          <Col span={6}>
+            <SideMenu />
+          </Col>
+          <Col span={18}>
+            <Carousel />
+          </Col>
+        </Row>
 
-          {/* 产品推荐 */}
-          <ProductCollection
-            title={<Typography.Title level={3} type='warning'>
-              {t('home_page.hot_recommended')}
-            </Typography.Title>}
-            sideImage={sideImage1}
-            products={productList[0].touristRoutes}
-          />
-          <ProductCollection
-            title={<Typography.Title level={3} type='danger'>
-              {t('home_page.new_arrival')}
-            </Typography.Title>}
-            sideImage={sideImage2}
-            products={productList[1].touristRoutes}
-          />
-          <ProductCollection
-            title={<Typography.Title level={3} type='success'>
-              {t('home_page.domestic_travel')}
-            </Typography.Title>}
-            sideImage={sideImage3}
-            products={productList[2].touristRoutes}
-          />
+        {/* 产品推荐 */}
+        <ProductCollection
+          title={<Typography.Title level={3} type='warning'>
+            {t('home_page.hot_recommended')}
+          </Typography.Title>}
+          sideImage={sideImage1}
+          products={productList[0].touristRoutes}
+        />
+        <ProductCollection
+          title={<Typography.Title level={3} type='danger'>
+            {t('home_page.new_arrival')}
+          </Typography.Title>}
+          sideImage={sideImage2}
+          products={productList[1].touristRoutes}
+        />
+        <ProductCollection
+          title={<Typography.Title level={3} type='success'>
+            {t('home_page.domestic_travel')}
+          </Typography.Title>}
+          sideImage={sideImage3}
+          products={productList[2].touristRoutes}
+        />
 
-          {/* 合作企业 */}
-          <BusinessPartners />
-        </div>
+        {/* 合作企业 */}
+        <BusinessPartners />
 
-        <Footer />
-      </>
+      </MainLayout>
     )
   }
 }
