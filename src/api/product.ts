@@ -13,7 +13,7 @@ import {
 export const getProductList = () => {
   return request({
     method: 'GET',
-    url: '/productCollections'
+    url: '/api/productCollections'
   }, productList, 180)
 }
 
@@ -21,7 +21,7 @@ export const getProductList = () => {
 export const getTouristRoutes = (id: string | number) => {
   return request({
     method: 'GET',
-    url: '/touristRoutes',
+    url: '/api/touristRoutes',
     params: {
       id
     }
@@ -35,7 +35,7 @@ export interface SearchParams {
 }
 // 搜索旅游路线
 export const searchTouristRoutes = (params: SearchParams) => {
-  let url = `/touristRoutes?currentPage=${params.currentPage}&pageSize=${params.pageSize}`
+  let url = `/api/touristRoutes?currentPage=${params.currentPage}&pageSize=${params.pageSize}`
   if (params.keywords) {
     url += `$keywords=${params.keywords}`
   }

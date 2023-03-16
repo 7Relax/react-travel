@@ -4,7 +4,7 @@ import { AxiosRequestConfig } from 'axios'
 
 // 创建请求实例
 // const request = axios.create({
-//   baseURL: 'http://123.56.149.216:8080/api'
+//   baseURL: 'http://123.56.149.216:8080'
 // })
 
 // export default request
