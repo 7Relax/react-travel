@@ -432,5 +432,5 @@ export const searchTouristRoutesDataObj = {
 
 // 用户授权信息
 export const userToken = {
-  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzkwMjg4NjY0NzUsImVtYWlsIjoiYWJjQDE2My5jb20ifQ.PlNuawxGwGGhIRDkFOWIX7UomK0EC_B-BSmEafGtPoo'
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzkwMjg4NjY0NzUsInVzZXJuYW1lIjoiYWJjQDE2My5jb20ifQ.8gky1e1gZ9cDG079K-uxn06c2qU3tMZnjfcH5Qfdlfw'
 }

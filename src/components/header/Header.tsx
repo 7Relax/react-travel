@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import logo from '../../assets/logo.svg'
 import styles from './Header.module.css'
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd'
@@ -15,6 +15,13 @@ import {
   // LanguageActionTypes
 } from '../../redux/language/languageActions'
 import { useTranslation } from 'react-i18next'
+import jwt_decode, { JwtPayload as DefaultJwtPayload } from 'jwt-decode'
+import { userSlice } from '../../redux/user/slice'
+
+// 自定义JwtPayload
+interface JwtPayload extends DefaultJwtPayload {
+  username: string
+}
 
 export const Header: React.FC = () => {
   const history = useHistory()
@@ -34,6 +41,19 @@ export const Header: React.FC = () => {
  // const dispatch = useDispatch<Dispatch<LanguageActionTypes>>()
   const dispatch = useDispatch()
 
+  // 从Store中取得 jwt 并解码
+  const jwt = useSelector(s => s.user.token)
+  const [username, setUsername] = useState('')
+
+  useEffect(() => {
+    if (jwt) {
+      // 解码jwt
+      const token = jwt_decode<JwtPayload>(jwt)
+      // 更新用户数据
+      setUsername(token.username)
+    }
+  }, [jwt])
+
   const menuClickHandler = (e) => {
     if (e.key === 'new') {
       const action = addLanguageActionCreator('新语言', 'new_lang')
@@ -42,6 +62,20 @@ export const Header: React.FC = () => {
       const action = changeLanguageActionCreator(e.key)
       dispatch(action)
     }
+  }
+
+  const [logoutLoading, setLogoutLoading] = useState<boolean>(false)
+  const onLogout = () => {
+    setLogoutLoading(true)
+    setTimeout(() => {
+      setLogoutLoading(false)
+      // 分发登出action
+      dispatch(userSlice.actions.logout())
+      // 因为用户可能会在任意页面选择登出，所以这个网站还需要重定向到登录页面
+      history.push('/')
+      // 刷新页面，可加可不加
+      // window.location.reload(false)
+    }, 500)
   }
 
   const { t } = useTranslation()
@@ -66,11 +100,19 @@ export const Header: React.FC = () => {
           >
             {language === 'zh' ? '中文' : '英文'}
           </Dropdown.Button>
-
-          <Button.Group className={styles['button-group']}>
-            <Button onClick={() => history.push('/register')}>{t('header.register')}</Button>
-            <Button onClick={() => history.push('/signin')}>{t('header.signin')}</Button>
-          </Button.Group>
+          {jwt ?
+            <Button.Group className={styles['button-group']}>
+              <span style={{ marginRight: 10 }}>{t('header.welcome')}</span>
+              <Typography.Text strong style={{ marginRight: 10 }}>{ username }</Typography.Text>
+              <Button onClick={() => history.push('/cart')}>{t('header.shoppingCart')}</Button>
+              <Button onClick={ onLogout } loading={ logoutLoading }>{t('header.logout')}</Button>
+            </Button.Group>
+            :
+            <Button.Group className={styles['button-group']}>
+              <Button onClick={() => history.push('/register')}>{t('header.register')}</Button>
+              <Button onClick={() => history.push('/signin')}>{t('header.signin')}</Button>
+            </Button.Group>
+          }
         </div>
       </div>
 

@@ -40,5 +40,10 @@ export const userSlice = createSlice({
     },
   },
   reducers: {
+    logout: (state) => {
+      state.loading = false
+      state.error = null
+      state.token = null
+    }
   },
 })
