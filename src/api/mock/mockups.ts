@@ -429,3 +429,8 @@ export const searchTouristRoutesDataObj = {
     totalCount: 2,
   }
 }
+
+// 用户授权信息
+export const userToken = {
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzkwMjg4NjY0NzUsImVtYWlsIjoiYWJjQDE2My5jb20ifQ.PlNuawxGwGGhIRDkFOWIX7UomK0EC_B-BSmEafGtPoo'
+}

@@ -16,7 +16,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { productDetailSlice } from './productDetail/slice'
 // 引入搜索产品slice
 import { productSearchSlice } from './productSearch/slice'
-
+// 引入用户登录slice
+import { userSlice } from './user/slice'
 
 // rootReducer: 所有reducer的集合体
 const rootReducer = combineReducers({
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   product: productsReducer,
   productDetail: productDetailSlice.reducer,
   productSearch: productSearchSlice.reducer,
+  user: userSlice.reducer,
 })
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog))
