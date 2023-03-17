@@ -18,6 +18,8 @@ import { productDetailSlice } from './productDetail/slice'
 import { productSearchSlice } from './productSearch/slice'
 // 引入用户登录slice
 import { userSlice } from './user/slice'
+// 引入购物车slice
+import { shoppingCartSlice } from './shoppingCart/slice'
 
 // rootReducer: 所有reducer的集合体
 const rootReducer = combineReducers({
@@ -26,6 +28,7 @@ const rootReducer = combineReducers({
   productDetail: productDetailSlice.reducer,
   productSearch: productSearchSlice.reducer,
   user: userSlice.reducer,
+  shoppingCart: shoppingCartSlice.reducer,
 })
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog))
