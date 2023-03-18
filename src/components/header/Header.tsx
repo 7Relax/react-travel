@@ -89,6 +89,7 @@ export const Header: React.FC = () => {
       <div className={styles['top-header']}>
         <div className={styles.inner}>
           <Typography.Text>{t('header.slogan')}</Typography.Text>
+
           <Dropdown.Button
             style={{ marginLeft: 15 }}
             overlay={
@@ -103,6 +104,7 @@ export const Header: React.FC = () => {
           >
             {language === 'zh' ? '中文' : '英文'}
           </Dropdown.Button>
+
           {jwt ?
             <Button.Group className={styles['button-group']}>
               <span style={{ marginRight: 10 }}>{t('header.welcome')}</span>
