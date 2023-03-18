@@ -5,13 +5,15 @@ import { Row, Col, Affix } from 'antd'
 import { ProductList, PaymentCard } from '../../components'
 import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
-import { clearShoppingCart } from '../../redux/shoppingCart/slice'
+import { clearShoppingCart, checkout } from '../../redux/shoppingCart/slice'
+import { useHistory } from 'react-router-dom'
 
 export const ShoppingCartPage: React.FC = () => {
   const loading = useSelector(s => s.shoppingCart.loading)
   const shoppingCartItems = useSelector(s => s.shoppingCart.items)
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   return (
     <MainLayout>
@@ -44,6 +46,11 @@ export const ShoppingCartPage: React.FC = () => {
                 }
                 // 用户点击下单按钮
                 onCheckout={() => {
+                  if (shoppingCartItems.length <= 0) {
+                    return // 购物车没有商品，不做任何操作
+                  }
+                  dispatch(checkout())
+                  history.push('/placeOrder')
                 }}
                 // 挑出所有的购物车Id，再 dispatch 给 clearShoppingCart
                 onShoppingCartClear={() => {
