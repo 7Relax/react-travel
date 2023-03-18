@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, useParams } from 'react-router-dom'
 import { commentData } from '../../api/mock/mockups'
 import { Spin, Row, Col, DatePicker, Divider, Typography, Anchor, Menu } from 'antd'
+import { Button } from 'antd'
 import styles from './DetailPage.module.css'
 import { ProductIntro, ProductComments } from '../../components'
 import { MainLayout } from '../../layouts/mainLayout'
 import { getProductDetail } from '../../redux/productDetail/slice'
 import { useSelector } from '../../redux/hooks' // 自定义hook
 import { useDispatch  } from 'react-redux';
+import { ShoppingCartOutlined } from '@ant-design/icons'
+import { addShoppingCartItem } from '../../redux/shoppingCart/slice'
 
 const { RangePicker } = DatePicker
 
@@ -28,6 +31,8 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = () => {
   const loading = useSelector(state => state.productDetail.loading)
   const error = useSelector(state => state.productDetail.error)
   const product = useSelector(state => state.productDetail.data)
+
+  const shoppingCartloading = useSelector(state => state.shoppingCart.loading)
 
   // 取得 dispatch 函数
   const dispatch = useDispatch()
@@ -75,6 +80,19 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = () => {
             />
           </Col>
           <Col span={11}>
+
+            <Button
+              loading={shoppingCartloading}
+              onClick={() => {
+                dispatch(addShoppingCartItem(product.id))
+              }}
+              danger
+              type='primary'
+              style={{ marginTop: 50, marginBottom: 30, display: 'block' }}>
+              <ShoppingCartOutlined />
+              放入购物车
+            </Button>
+
             <RangePicker open style={{ marginTop: 20 }}/>
           </Col>
         </Row>

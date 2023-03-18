@@ -27,8 +27,8 @@ const initialState: ShoppingCartState = {
 export const getShoppingCart = createAsyncThunk(
   'shoppingCart/getShoppingCart', // 命名空间/action
   async () => {
-    const data = await getShoppingCartList()
-    return data.shoppingCartItems // return 后的数据就是 payload
+    const list = await getShoppingCartList()
+    return list // return 后的数据就是 payload
   },
 )
 
@@ -36,12 +36,12 @@ export const getShoppingCart = createAsyncThunk(
 export const addShoppingCartItem = createAsyncThunk(
   'shoppingCart/addShoppingCartItem',
   async (touristRouteId: string) => {
-    const data = await addShoppingCart(touristRouteId)
-    return data.shoppingCartItems
+    const obj = await addShoppingCart(touristRouteId)
+    return obj
   },
 )
 
-// 清空购物车
+// 清空购物车（批量）
 export const clearShoppingCart = createAsyncThunk(
   'shoppingCart/clearShoppingCart',
    async (ids: number[]) => {
@@ -74,7 +74,7 @@ export const shoppingCartSlice = createSlice({
     },
     [addShoppingCartItem.fulfilled.type]: (state, action) => {
       state.loading = false
-      state.items = action.payload
+      state.items = [...state.items, action.payload]
       state.error = null
     },
     [addShoppingCartItem.rejected.type]: (state, action: PayloadAction<string | null>) => {

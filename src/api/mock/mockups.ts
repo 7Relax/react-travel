@@ -435,28 +435,51 @@ export const userToken = {
   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzkwMjg4NjY0NzUsInVzZXJuYW1lIjoiYWJjQDE2My5jb20ifQ.8gky1e1gZ9cDG079K-uxn06c2qU3tMZnjfcH5Qfdlfw'
 }
 
+const originalCart = {
+  id: 0, // 购物车商品Id
+  touristRouteId: 't0',
+  touristRoute: {
+    id: 0, // 旅游路线Id
+    title: '0-苏州+乌镇+杭州3日2晚跟团游(5钻)',
+    description: '【携程自营.2成人立减200】生活着的古镇——寻味5A西塘【明星漫游.春意江南】',
+    price: 79.998,
+    originalPrice: 799.98,
+    discountPresent: 0.1,
+    rating: null,
+    travelDays: '',
+    departureCity: '',
+    touristRoutePictures: [
+      {
+        url: "https://cdn.pixabay.com/photo/2014/08/15/11/29/beach-418742__340.jpg",
+      }
+    ]
+  },
+  shoppingCartId: 's001',
+  originalPrice: 15490.00,
+  discountPresent: 0.1,
+}
+
 // 当前用户的购物车列表
-export const shoppingCartData = {
-  id: '3110345c',
-  userId: 'ded45b4b',
-  shoppingCartItems: [
-    {
-      id: 1,
-      touristRouteId: 't001',
-      touristRoute: {
-        id: 'a1234',
-        title: '苏州+乌镇+杭州3日2晚跟团游(5钻)',
-        description: '【携程自营.2成人立减200】生活着的古镇——寻味5A西塘【明星漫游.春意江南】',
-        price: 79.998,
-        originalPrice: 799.98,
-        discountPresent: 0.1,
-        rating: null,
-        travelDays: '',
-        departureCity: '',
-      },
-      shoppingCartId: 's001',
-      originalPrice: 15490.00,
-      discountPresent: null,
+export const shoppingCartData = [
+  originalCart
+]
+
+// id自增函数
+let id = 1
+function * idMaker() {
+  yield id ++
+}
+
+export const addCart = () => {
+  const id = idMaker().next().value
+  return {
+    ...originalCart,
+    id,
+    touristRouteId: `t${id}`,
+    touristRoute: {
+      ...originalCart.touristRoute,
+      id,
+      title: `${id}-苏州+乌镇+杭州3日2晚跟团游(5钻)`,
     }
-  ]
+  }
 }

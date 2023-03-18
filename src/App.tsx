@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from "./App.module.css"
 import {
   HomePage,
@@ -15,6 +15,8 @@ import {
  */
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { useSelector } from './redux/hooks'
+import { useDispatch } from 'react-redux'
+import { getShoppingCart } from './redux/shoppingCart/slice'
 
 /**
  * 搭建私有路由
@@ -36,6 +38,17 @@ const PrivateRoute = ({ component, isAuthenticated, ...rest }) => {
 function App() {
   // 取得jwt
   const jwt = useSelector(state => state.user.token)
+
+  const dispatch = useDispatch()
+
+  // 通过副作用向 Store 发送 getShoppingCart 这个 action 信息
+  // App 启动时，加载购物车的数据
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getShoppingCart())
+    }
+  }, [dispatch, jwt])
+
   return (
     <div className={styles.App}>
       <BrowserRouter>

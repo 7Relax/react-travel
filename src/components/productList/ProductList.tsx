@@ -21,7 +21,7 @@ interface Product {
 
 interface PropsType {
   data: Product[]
-  paging: any
+  paging?: any // 分页
   onPageChange?: (nextPage, pageSize) => void
 }
 
@@ -63,21 +63,27 @@ export const ProductList: React.FC<PropsType> = ({
     <List
       itemLayout="vertical"
       size="large"
-      pagination={{
-        current: paging.currentPage,
-        onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
-        pageSize: paging.pageSize,
-        total: paging.totalCount,
-      }}
+      pagination={
+        // paging 存在则显示分页信息
+        paging ?
+        {
+          current: paging.currentPage,
+          onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
+          pageSize: paging.pageSize,
+          total: paging.totalCount,
+        } : false
+      }
       dataSource={products}
       footer={
-        <div>
-          搜索总路线: <Text strong>{paging.totalCount}</Text> 条
-        </div>
+        paging && (
+          <div>
+            搜索总路线: <Text strong>{paging.totalCount}</Text> 条
+          </div>
+        )
       }
       renderItem={(item) => (
         <List.Item
-          key={item.title}
+          key={item.id}
           actions={[
             <IconText
               icon={StarOutlined}

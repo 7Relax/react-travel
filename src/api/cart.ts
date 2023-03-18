@@ -3,7 +3,7 @@
  */
 
 import request from '../utils/request'
-import { shoppingCartData } from './mock/mockups'
+import { shoppingCartData, addCart } from './mock/mockups'
 
 // 获取购物车列表 应该是分页获取的
 export const getShoppingCartList = () => {
@@ -15,13 +15,14 @@ export const getShoppingCartList = () => {
 
 // 添加购物车
 export const addShoppingCart = (touristRouteId: string) => {
+  const obj = addCart()
   return request({
     method: 'POST',
     url: '/api/shoppingCart/items',
     params: {
       touristRouteId
     }
-  }, shoppingCartData, 250)
+  }, obj, 150)
 }
 
 // 删除购物车商品，删除成功响应 204 No Content
