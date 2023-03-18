@@ -23,6 +23,8 @@ import { productSearchSlice } from './productSearch/slice'
 import { userSlice } from './user/slice'
 // 引入购物车slice
 import { shoppingCartSlice } from './shoppingCart/slice'
+// 引入订单slice
+import { orderSlice } from './order/slice'
 
 // rootReducer: 所有reducer的集合体
 const rootReducer = combineReducers({
@@ -32,6 +34,7 @@ const rootReducer = combineReducers({
   productSearch: productSearchSlice.reducer,
   user: userSlice.reducer,
   shoppingCart: shoppingCartSlice.reducer,
+  order: orderSlice.reducer,
 })
 
 const persistConfig = {
