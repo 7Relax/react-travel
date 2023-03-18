@@ -7,7 +7,8 @@ import {
 import {
   getShoppingCartList,
   addShoppingCart,
-  batchDeleteShoppingCarts
+  batchDeleteShoppingCarts,
+  checkout as doCheckout,
 } from '../../api/cart'
 
 interface ShoppingCartState {
@@ -38,6 +39,14 @@ export const addShoppingCartItem = createAsyncThunk(
   async (touristRouteId: string) => {
     const obj = await addShoppingCart(touristRouteId)
     return obj
+  },
+)
+
+// 下单
+export const checkout = createAsyncThunk(
+  'shoppingCart/checkout',
+  async () => {
+    return await doCheckout()
   },
 )
 
@@ -78,6 +87,19 @@ export const shoppingCartSlice = createSlice({
       state.error = null
     },
     [addShoppingCartItem.rejected.type]: (state, action: PayloadAction<string | null>) => {
+      state.loading = false
+      state.error = action.payload
+    },
+    // 下单
+    [checkout.pending.type]: (state) => {
+      state.loading = true
+    },
+    [checkout.fulfilled.type]: (state, action) => {
+      state.loading = false
+      state.items = [] // 下单成功后 要清空购物车
+      state.error = null
+    },
+    [checkout.rejected.type]: (state, action: PayloadAction<string | null>) => {
       state.loading = false
       state.error = action.payload
     },

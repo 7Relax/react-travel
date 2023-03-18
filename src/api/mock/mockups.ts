@@ -470,7 +470,8 @@ function * idMaker() {
   yield id ++
 }
 
-export const addCart = () => {
+// 获取模拟的新商品
+const productFactory = () => {
   const id = idMaker().next().value
   return {
     ...originalCart,
@@ -481,5 +482,38 @@ export const addCart = () => {
       id,
       title: `${id}-苏州+乌镇+杭州3日2晚跟团游(5钻)`,
     }
+  }
+}
+
+// 购物车添加商品
+export const addCart = () => {
+  return productFactory()
+}
+
+// 下单
+export const doCheckout = () => {
+  return {
+    id: 'orderId-001',
+    userId: 'userId-001',
+    orderItems: [
+      productFactory()
+    ],
+    state: 'Pending',
+    createDateUTC: '2023-03-07 18:57:33',
+    transactionMetadata: null,
+  }
+}
+
+// 订单支付成功 返回商品信息
+export const doOrderPayment = () => {
+  return {
+    id: 'orderId-001',
+    userId: 'userId-001',
+    orderItems: [
+      productFactory()
+    ],
+    state: 'Completed',
+    createDateUTC: '2023-03-07 18:58:19',
+    transactionMetadata: null,
   }
 }

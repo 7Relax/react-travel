@@ -3,7 +3,7 @@
  */
 
 import request from '../utils/request'
-import { shoppingCartData, addCart } from './mock/mockups'
+import { shoppingCartData, addCart, doCheckout } from './mock/mockups'
 
 // 获取购物车列表 应该是分页获取的
 export const getShoppingCartList = () => {
@@ -39,4 +39,12 @@ export const batchDeleteShoppingCarts = (ids: number[]) => {
     method: 'DELETE',
     url: `/api/shoppingCart/items/(${ids.join(',')})`,
   }, {}, 200)
+}
+
+// 下单 - 生成订单信息 - 参数只需要用户的token信息
+export const checkout = () => {
+  return request({
+    method: 'POST',
+    url: '/api/shoppingCart/checkout',
+  }, doCheckout(), 200)
 }

@@ -6,7 +6,8 @@ import {
   RegisterPage,
   DetailPage,
   SearchPage,
-  ShoppingCartPage
+  ShoppingCartPage,
+  PlaceOrderPage,
 } from './pages'
 /**
  * 因为项目是网页项目，所以会利用浏览器的导航功能，利用H5的API来进行路由，
@@ -76,6 +77,12 @@ function App() {
             isAuthenticated={jwt !== null}
             path='/shoppingCart'
             component={ShoppingCartPage}
+          />
+
+          <PrivateRoute
+            isAuthenticated={jwt !== null}
+            path='/placeOrder'
+            component={PlaceOrderPage}
           />
 
           <Route render={() => <h1>404 not found</h1>} />
