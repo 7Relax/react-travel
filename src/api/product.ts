@@ -14,7 +14,7 @@ export const getProductList = () => {
   return request({
     method: 'GET',
     url: '/api/productCollections'
-  }, productList, 180)
+  }, productList, 100)
 }
 
 // 获取旅游路线
